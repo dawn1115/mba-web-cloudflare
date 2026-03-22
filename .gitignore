@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+/storage/uploads/
+/dev.db
+/prisma/dev.db
+
+# Cloudflare / wrangler
+.dev.vars
+.wrangler/
+.open-next/
+build_output.txt
+.tmp-cp/
+# worker-configuration.d.ts 由 wrangler types 或手动维护，不忽略

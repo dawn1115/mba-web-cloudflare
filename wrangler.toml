@@ -1,0 +1,20 @@
+name = "mba-web"
+main = ".open-next/worker.js"
+compatibility_date = "2026-03-23"
+compatibility_flags = ["nodejs_compat"]
+assets = { directory = ".open-next/assets", binding = "ASSETS" }
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mba-web-db"
+# 创建 D1 后执行: wrangler d1 create mba-web-db
+# 然后将输出的 database_id 填写到下方
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "mba-web-files"
+# 创建 R2 后执行: wrangler r2 bucket create mba-web-files
+
+[vars]
+NEXT_PUBLIC_APP_NAME = "安徽师范大学科技商学院管理案例库"

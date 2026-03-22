@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4efe4;
+  --panel: rgba(255, 252, 247, 0.9);
+  --ink: #132433;
+  --muted: #5f6c77;
+  --accent: #c65a35;
+  --accent-dark: #123247;
+  --line: rgba(19, 36, 51, 0.12);
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground: var(--ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background:
+    radial-gradient(circle at top left, rgba(198, 90, 53, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(18, 50, 71, 0.16), transparent 30%),
+    var(--background);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: transparent;
+  color: var(--ink);
+  font-family:
+    "Noto Sans SC",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family:
+    "Songti SC",
+    "STSong",
+    "Noto Serif SC",
+    "Source Han Serif SC",
+    serif;
+}
+
+::selection {
+  background: rgba(198, 90, 53, 0.2);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  outline: none;
 }

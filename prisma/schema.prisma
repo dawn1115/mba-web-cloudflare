@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  phone        String?  @unique
+  identifier   String?
+  password     String
+  role         String   @default("student")
+  status       String   @default("pending")
+  major        String?
+  department   String?
+  bio          String?
+  lastLoginAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploadedCases   Case[]           @relation("UploadedCases")
+  reviewedCases   Case[]           @relation("ReviewedCases")
+  collections     Collection[]
+  downloadRecords DownloadRecord[]
+  notices         Notice[]         @relation("NoticeAuthor")
+  logs            ActivityLog[]
+
+  @@index([role])
+  @@index([status])
+}
+
+model Case {
+  id                 String   @id @default(uuid())
+  serialNumber       String   @unique
+  title              String
+  translatedTitle    String?  // 译名
+  author             String   // 案例作者
+  authorDepartment   String?  // 作者单位
+  advisor            String?  // 指导者
+  translator         String?  // 译者
+  abstract           String   // 中文摘要
+  englishAbstract    String?  // 英文摘要
+  keywords           String   // 中文关键词
+  englishKeywords    String?  // 英文关键词
+  category           String   // 行业/学科领域
+  type               String   // 案例类型 (例如: 决策型)
+  course             String   // 适用课程
+  company            String?  // 案例企业名称
+  companyScale       String?  // 规模 (例如: 大型)
+  functionalArea     String?  // 案例涉及的职能领域 (例如: 人力资源部门)
+  language           String   @default("中文") // 案例语种
+  pageCount          Int?     // 案例正文页数（页）
+  targetAudience     String?  // 适用对象 (经营管理人员、本科生、硕士生、MBA)
+  writingMethod      String?  // 编写方式 (改编/二手资料编写)
+  theoreticalKnowledge String? // 案例涉及理论知识
+  developmentYear    Int?     // 案例年代
+  accessLevel        String   @default("public")
+  copyrightStatement String
+  status             String   @default("pending")
+  reviewComment      String?
+  uploaderId         String
+  reviewerId         String?
+  primaryFileName    String?
+  primaryFilePath    String?
+  primaryFileMime    String?
+  primaryFileSize    Int?
+  views              Int      @default(0)
+  downloads          Int      @default(0)
+  publishedAt        DateTime?
+  reviewedAt         DateTime?
+  archivedAt         DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  uploader        User             @relation("UploadedCases", fields: [uploaderId], references: [id], onDelete: Cascade)
+  reviewer        User?            @relation("ReviewedCases", fields: [reviewerId], references: [id], onDelete: SetNull)
+  attachments     Attachment[]
+  collections     Collection[]
+  downloadRecords DownloadRecord[]
+
+  @@index([status])
+  @@index([category])
+  @@index([type])
+  @@index([accessLevel])
+  @@index([createdAt])
+  @@index([publishedAt])
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  caseId     String
+  kind      String   @default("attachment")
+  fileName   String
+  filePath   String
+  mimeType   String?
+  size       Int?
+  createdAt  DateTime @default(now())
+
+  caseRef Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+  @@index([kind])
+}
+
+model Collection {
+  id        String   @id @default(uuid())
+  userId    String
+  caseId    String
+  createdAt DateTime @default(now())
+
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caseRef Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, caseId])
+  @@index([caseId])
+}
+
+model DownloadRecord {
+  id        String   @id @default(uuid())
+  userId    String
+  caseId    String
+  createdAt DateTime @default(now())
+
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caseRef Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+  @@index([createdAt])
+}
+
+model Notice {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  authorId    String
+  isPinned    Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author User @relation("NoticeAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([isPinned])
+  @@index([publishedAt])
+}
+
+model ActivityLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  action     String
+  entityType String
+  entityId   String?
+  detail     String?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+}
