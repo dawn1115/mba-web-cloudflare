@@ -11,7 +11,7 @@
     "build:next": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js';let s=fs.readFileSync(p,'utf8');const a='**/{*-manifest,required-server-files}.json';const b='**/{*-manifest,required-server-files,prefetch-hints}.json';if(s.includes(b)){process.exit(0);}if(!s.includes(a)){console.error('OpenNext patch target not found in '+p);process.exit(1);}fs.writeFileSync(p,s.replace(a,b));console.log('Patched OpenNext load-manifest to include prefetch-hints.json');\"",
+    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js';let s=fs.readFileSync(p,'utf8');const a1='const baseDir = join(outputDir, \\\"server-functions/default\\\", getPackagePath(buildOpts));\\n    const dotNextDir = join(baseDir, \\\".next\\\");';const b1='const dotNextDir = join(process.cwd(), \\\".next\\\");';if(s.includes(a1)) s=s.replace(a1,b1);const a2='**/{*-manifest,required-server-files}.json';const b2='**/{*-manifest,required-server-files,prefetch-hints}.json';if(s.includes(a2)) s=s.replace(a2,b2);fs.writeFileSync(p,s);console.log('Patched OpenNext load-manifest for Next 16 manifests');\"",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "db:migrate:local": "wrangler d1 migrations apply mba-web-db --local",
