@@ -18,3 +18,19 @@ bucket_name = "mba-web-files"
 
 [vars]
 NEXT_PUBLIC_APP_NAME = "安徽师范大学科技商学院管理案例库"
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1
+
