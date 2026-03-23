@@ -9,7 +9,7 @@ binding = "DB"
 database_name = "mba-web-db"
 # 创建 D1 后执行: wrangler d1 create mba-web-db
 # 然后将输出的 database_id 填写到下方
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "4adde76f-f7d8-4b5e-9691-fb58fee96f8e"
 
 [[r2_buckets]]
 binding = "FILES"
