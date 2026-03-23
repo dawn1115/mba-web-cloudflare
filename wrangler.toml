@@ -1,4 +1,4 @@
-name = "mba-web"
+name = "mba-web-cloudflare"
 main = ".open-next/worker.js"
 compatibility_date = "2026-03-23"
 compatibility_flags = ["nodejs_compat"]
