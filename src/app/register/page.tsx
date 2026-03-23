@@ -6,7 +6,6 @@ import { useActionState } from 'react';
 import { registerAction } from '@/app/actions';
 import SubmitButton from '@/components/forms/SubmitButton';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
 
 export default function RegisterPage() {
   const [state, formAction] = useActionState(registerAction, null);

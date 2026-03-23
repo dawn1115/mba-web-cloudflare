@@ -4,6 +4,8 @@ import { getCurrentUser } from '@/lib/auth';
 import { getHomePageData } from '@/lib/data';
 import { formatCompactNumber, formatDate } from '@/lib/format';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const [viewer, homeData] = await Promise.all([getCurrentUser(), getHomePageData()]);
 

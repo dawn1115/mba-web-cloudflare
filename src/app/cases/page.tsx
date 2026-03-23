@@ -6,7 +6,6 @@ import { listCases } from '@/lib/data';
 import { accessLevelLabel, caseStatusLabel, formatCompactNumber, formatDate } from '@/lib/format';
 import { canUploadCases } from '@/lib/permissions';
 import { Select } from '@/components/ui/Select';
-import SubmitButton from '@/components/forms/SubmitButton';
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
